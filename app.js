@@ -1,8 +1,8 @@
 var http = require('http');
-var child_process = require('child_process');
-var sys = require('sys')
+var default_port = 1771;
+var util = require('util')
 var exec = require('child_process').exec;
-function puts(error, stdout, stderr) { sys.puts(stdout) }
+function puts(error, stdout, stderr) { util.puts(stdout) }
 
 http.createServer(function (req, res) {
 	var urlSplitOnSegment = req.url.split('?')[1];
@@ -30,23 +30,20 @@ http.createServer(function (req, res) {
 				}
 			}
 
-			command = "echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in";
-
-			exec(command, puts);
-
 			res.writeHead ("200", {'Content-Type': 'text/plain'});
 
-			console.log (command);
-			res.end (output);
+			res.end (
+				exec("echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in", puts)
+			);
 		} else {
 			res.writeHead ("500", {'Content-Type': 'text/plain'});
 			res.end ("Error");
 		}
 	} else {
 		var output = "no params passes";
-		res.writeHead ("200", {'Content-Type': 'text/plain'});
+		res.writeHead ("500", {'Content-Type': 'text/plain'});
 
 		console.log (output);
 		res.end (output);
 	}
-}).listen(666);
+}).listen(default_port);
