@@ -27,9 +27,19 @@ http.createServer(function (req, res) {
 				}
 			}
 
-			command = "echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in";
+			//command = "echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in";
 
-			sh.exec (command);
+			//sh.exec (command);
+
+var fs = require('fs');
+fs.writeFile("/home/pi/pycm19a/cm19a/in", "-c1", function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+})
+
 			output += command;
 
 			res.writeHead ("200", {'Content-Type': 'text/plain'});
