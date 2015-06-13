@@ -33,7 +33,7 @@ http.createServer(function (req, res) {
 			res.writeHead ("200", {'Content-Type': 'text/plain'});
 
 			res.end (
-				exec("echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in", puts)
+				exec("echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in", puts).toString()
 			);
 		} else {
 			res.writeHead ("500", {'Content-Type': 'text/plain'});
