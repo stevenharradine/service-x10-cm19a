@@ -2,6 +2,26 @@ var http = require('http');
 var child_process = require('child_process');
 //    sh = require('execSync');	// executing system commands
 
+// taken from https://strongloop.com/strongblog/whats-new-in-node-js-v0-12-execsync-a-synchronous-api-for-child-processes/ on 06132015 at 18:25 EST
+function execSync(command) {
+// Run the command in a subshell
+child_process.exec(command);
+ 
+// Block the event loop until the command has executed.
+while (!fs.existsSync('done')) {
+// Do nothing
+}
+ 
+// Read the output
+var output = fs.readFileSync('output');
+ 
+// Delete temporary files.
+fs.unlinkSync('output');
+fs.unlinkSync('done');
+ 
+return output;
+}
+
 http.createServer(function (req, res) {
 	var urlSplitOnSegment = req.url.split('?')[1];
 
@@ -28,10 +48,7 @@ http.createServer(function (req, res) {
 				}
 			}
 
-			//command = "echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in";
-
-			//sh.exec (command);
-child_process.exec (command);
+			execSync (command);
 
 			res.writeHead ("200", {'Content-Type': 'text/plain'});
 
