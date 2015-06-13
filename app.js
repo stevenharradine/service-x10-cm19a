@@ -15,14 +15,17 @@ http.createServer(function (req, res) {
 			    houseCode  = "",
 			    unitCode   = "",
 			    statusCode = "",
-			    command    = "";
+			    command    = "",
+			    validHouseCodes = ['a', 'b', 'c'],
+			    validUnitCodes = ['1', '2', '3'],
+			    validStatusCodes = ['-', '+'];
 
 			for (i = 0; i < urlSplit.length; i++) {
 				var name  = urlSplit[i].split('=')[0],
 				    value = urlSplit[i].split('=')[1];
 
 				if (name == "houseCode") {
-					houseCode = value;
+					houseCode = value.toLower();
 				} else if (name == "unitCode") {
 					unitCode = value;
 				} else if (name == "statusCode") {
@@ -30,11 +33,25 @@ http.createServer(function (req, res) {
 				}
 			}
 
-			res.writeHead ("200", {'Content-Type': 'text/plain'});
+			if ( validHouseCodes.indexOf(houseCode) >= 0 ) {
+console.log ("A");
 
-			res.end (
-				exec("echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in", puts).toString()
-			);
+				if (validUnitCodes.indexOf(unitCode) >= 0) {
+					console.log ("B");
+
+					if (validStatusCodes.indexOf(statusCode) >= 0) {
+						console.log ("C");
+
+						res.writeHead ("200", {'Content-Type': 'text/plain'});
+						res.end (
+							exec("echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in", puts).toString()
+						);
+					}
+				}
+			}
+
+			res.writeHead ("300", {'Content-Type': 'text/plain'});
+			res.end ("Error: invalid code(s)");
 		} else {
 			res.writeHead ("500", {'Content-Type': 'text/plain'});
 			res.end ("Error");
