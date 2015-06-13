@@ -1,5 +1,6 @@
-var http = require('http'),
-    sh = require('execSync');	// executing system commands
+var http = require('http');
+var child_process = require('child_process');
+//    sh = require('execSync');	// executing system commands
 
 http.createServer(function (req, res) {
 	var urlSplitOnSegment = req.url.split('?')[1];
@@ -30,16 +31,7 @@ http.createServer(function (req, res) {
 			//command = "echo " + statusCode + houseCode + unitCode + " > /home/pi/pycm19a/cm19a/in";
 
 			//sh.exec (command);
-
-var fs = require('fs');
-fs.writeFile("/home/pi/pycm19a/cm19a/in", "-c1", function(err) {
-    if(err) {
-        return console.log(err);
-    }
-
-    console.log("The file was saved!");
-})
-
+child_process.exec (command);
 			output += command;
 
 			res.writeHead ("200", {'Content-Type': 'text/plain'});
