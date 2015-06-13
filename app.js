@@ -25,7 +25,7 @@ http.createServer(function (req, res) {
 				    value = urlSplit[i].split('=')[1];
 
 				if (name == "houseCode") {
-					houseCode = value.toLower();
+					houseCode = value;
 				} else if (name == "unitCode") {
 					unitCode = value;
 				} else if (name == "statusCode") {
