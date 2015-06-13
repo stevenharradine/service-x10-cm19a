@@ -1,0 +1,10 @@
+{
+  "name": "service-cm19a",
+  "description": "Provides remote control to the cm19a.",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "http": "*",
+    "execSync": "*"
+  }
+}
