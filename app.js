@@ -32,12 +32,11 @@ http.createServer(function (req, res) {
 
 			//sh.exec (command);
 child_process.exec (command);
-			output += command;
 
 			res.writeHead ("200", {'Content-Type': 'text/plain'});
 
-			console.log (output);
-			res.end (output);
+			console.log (command);
+			res.end (command);
 		} else {
 			res.writeHead ("500", {'Content-Type': 'text/plain'});
 			res.end ("Error");
