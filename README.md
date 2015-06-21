@@ -1,4 +1,4 @@
-# cm19a Remote Control Web Service
+# Remote Control Web Service for the cm19a
 Provides the service to remotely control the cm19a
 
 ## Usage
